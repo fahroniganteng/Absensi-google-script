@@ -1,0 +1,86 @@
+<!--
+  ABSENSI GOOGLE SCRIPT
+  -----------------------------------------------------
+  Code by : fahroni|ganteng
+  contact me : fahroniganteng@gmail.com
+  Date : Mar 2021
+  License :  MIT
+-->
+<!DOCTYPE html>
+<html>
+   <head>
+     <base target="_top">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   </head>
+  <body class="bg-light">
+    <div class="container">
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://drive.google.com/uc?id=[id-gambar]" alt="" width="150" >
+        <h2>Fahroni Ganteng co, ltd</h2>
+      </div>
+      <form class="row" onsubmit="submitAbsensi();return false;">
+        <div class="col-md-12">
+          <h4 class="mb-3">Formulir Absensi</h4>
+            <div class="mb-3">
+              <label for="idPegawai">ID Pegawai</label>
+              <input type="text" class="form-control" id="idPegawai" placeholder="Masukkan ID Anda" required>
+            </div>
+            <div class="mb-3">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Masukkan password anda" required>
+            </div>
+            <hr class="mb-4">
+            <div class="alert alert-success" role="alert" style="display:none"></div>
+            <div class="alert alert-warning" role="alert" style="display:none">
+              <h5>Perhatian!</h5>
+              <p>Anda harus mengijinkan akses lokasi pada browser agar bisa melakukan absensi</p>
+            </div>
+            <div class="alert alert-danger" role="alert" style="display:none">
+              <h5>Gagal!</h5>
+              <p>Anda tidak terdaftar</p>
+            </div>
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Submit Absensi</button>
+        </div>
+      </form>
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2021 Fahroni Ganteng co, ltd</p>
+      </footer>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      function submitAbsensi(){
+        $('.alert-warning').show();
+        if (navigator.geolocation)
+          navigator.geolocation.getCurrentPosition(simpanDataAbsensi);
+      }
+      function simpanDataAbsensi(position) {
+        $('.alert').hide();
+        $('.btn').attr('disabled',true).html('Menyimpan...');
+        let data = {
+          idPegawai : $('#idPegawai').val(),
+          password : $('#password').val(),
+          position  : [
+            position.coords.latitude,
+            position.coords.longitude
+          ]
+        };
+        console.log(data);
+        google.script.run.withSuccessHandler(callbackAbsensi).submitAbsensi(data);
+      }
+      function callbackAbsensi(msg){
+        if(msg){
+          $('.alert-success').html('<h5>Hallo '+msg+'!</h5><p>Data absensi anda telah disimpan</p>').show();
+          $('.form-control').val('');
+        }
+        else {
+          $('.alert-danger').show();
+          $('#password').val('');
+        }
+        $('.btn').removeAttr('disabled').html('Submit Absensi');
+      }
+    </script>
+    
+  </body>
+</html>
