@@ -12,8 +12,11 @@
 var database = "https://docs.google.com/spreadsheets/d/[id-dokumen]/edit#gid=0";
 
 function doGet(){
-  var tmp = HtmlService.createTemplateFromFile("index");
-  return tmp.evaluate();
+  return HtmlService
+    .createTemplateFromFile('index')
+    .evaluate()
+    .setSandboxMode(HtmlService.SandboxMode.NATIVE)
+    .addMetaTag('viewport', 'width=device-width, initial-scale=1');
 }
 
 function submitAbsensi(data){
