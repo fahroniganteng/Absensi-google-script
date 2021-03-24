@@ -6,7 +6,7 @@ Web absensi pada google script dan spreadsheets dengan login dan menyimpan lokas
 
 
 ## Testing & Demo
-https://script.google.com/macros/s/AKfycbx9vYWj7rnn5Wi97oWb6ji93VUEIN_IhIXwKMdFLSDx-n60JgaQ-Z3feiedlr4wA7FT/exec  
+https://script.google.com/macros/s/AKfycbzyp4ubIEPShU69QxBH_i-Yek9LLISezFKAS89DOXs0eZWAC4XlE6opgVT_Y3cDPIKS/exec
 - user : github
 - pass : github
 
