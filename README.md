@@ -7,7 +7,7 @@ Web absensi pada google script dan spreadsheets dengan login dan menyimpan lokas
 #### Video demo & instalasi
 [![DEMO](http://img.youtube.com/vi/l8oBqwMrlaE/0.jpg)](https://youtu.be/l8oBqwMrlaE)
 
-#### Testing & Demo
+#### Testing & demo aplikasi
 https://script.google.com/macros/s/AKfycbzyp4ubIEPShU69QxBH_i-Yek9LLISezFKAS89DOXs0eZWAC4XlE6opgVT_Y3cDPIKS/exec
 - user : github
 - pass : github
@@ -22,7 +22,7 @@ https://script.google.com/macros/s/AKfycbzyp4ubIEPShU69QxBH_i-Yek9LLISezFKAS89DO
 #### Video demo & instalasi
 [![DEMO](http://img.youtube.com/vi/Sf83RYbiwo0/0.jpg)](https://youtu.be/Sf83RYbiwo0)
 
-#### Testing & Demo
+#### Testing & demo aplikasi
 https://script.google.com/macros/s/AKfycbzXCF2kUJl72pl42FGQ81FMzTg1axb_UFpVC7HRzhTtME_LbgMyrgGIkqZaTiuAIFnPfg/exec
 - user : github
 - pass : github
