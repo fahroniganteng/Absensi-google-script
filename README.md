@@ -4,6 +4,9 @@ Web absensi pada google script dan spreadsheets dengan login dan menyimpan lokas
 <hr>
 
 ## VERSI 01
+Fitur :
+- Login dengan password
+- Simpan waktu, koordinat dan lokasi absensi
 #### Video demo & instalasi
 [![DEMO](http://img.youtube.com/vi/l8oBqwMrlaE/0.jpg)](https://youtu.be/l8oBqwMrlaE)
 
@@ -19,6 +22,11 @@ https://script.google.com/macros/s/AKfycbzyp4ubIEPShU69QxBH_i-Yek9LLISezFKAS89DO
 <hr>
 
 ## VERSI 02
+Tambahan fitur dari versi 01:
+- Membatasi absensi WFO (Work From Office) / WFH (Work From Home) berdasarkankan jarak.
+- Link ke google map untuk melihat jarak dan rute lokasi absen menuju kantor.
+- Simpan jarak absensi dengan kantor 
+- Kegiatan harian
 #### Video demo & instalasi
 [![DEMO](http://img.youtube.com/vi/Sf83RYbiwo0/0.jpg)](https://youtu.be/Sf83RYbiwo0)
 
