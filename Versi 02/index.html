@@ -1,0 +1,139 @@
+<!--
+  ABSENSI GOOGLE SCRIPT
+  -----------------------------------------------------
+  Code by : fahroni|ganteng
+  contact me : fahroniganteng@gmail.com
+  Date : Apr 2021
+  License :  MIT
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+	<base target="_top">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body class="bg-light">
+	<div class="container">
+		<div class="py-5 text-center">
+			<img class="d-block mx-auto mb-4" src="data:image/png;base64, <?!=dt.logo?>" alt="" width="200">
+			<h2>
+				<?!=dt.perusahaan?>
+			</h2>
+		</div>
+		<form class="row" onsubmit="submitAbsensi();return false;">
+			<div class="col-md-12">
+				<h4 class="mb-3">Formulir Absensi</h4>
+				<div class="mb-3">
+					<label for="idPegawai">ID Pegawai</label>
+					<input type="text" class="form-control" id="idPegawai" placeholder="Masukkan ID Anda" required>
+				</div>
+				<div class="mb-3">
+					<label for="password">Password</label>
+					<input type="password" class="form-control" id="password" placeholder="Masukkan password anda" required>
+				</div>
+				<div class="mb-3">
+					<label>Absensi</label>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="absensi" id="absensi1" value="Masuk" required>
+						<label class="form-check-label" for="absensi1">Masuk</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="absensi" id="absensi2" value="Pulang">
+						<label class="form-check-label" for="absensi2">Pulang</label>
+					</div>
+				</div>
+				<div class="mb-3">
+					<label>Bekerja dari</label>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="workFrom" id="workFrom1" value="WFO" required>
+						<label class="form-check-label" for="workFrom1">WFO (Kantor)</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="workFrom" id="workFrom2" value="WFH">
+						<label class="form-check-label" for="workFrom2">WFH (Rumah)</label>
+					</div>
+				</div>
+				<div class="mb-3">
+					<label for="kegiatan">Kegiatan Harian</label>
+					<textarea class="form-control" id="kegiatan" placeholder="Diisi hanya saat pulang" rows="4"></textarea>
+				</div>
+				<hr class="mb-4">
+				<div class="alert alert-success" role="alert" style="display:none"></div>
+				<div class="alert alert-warning" role="alert" style="display:none">
+					<h5>Perhatian!</h5>
+					<p>Anda harus mengijinkan akses lokasi pada browser agar bisa melakukan absensi</p>
+				</div>
+				<button class="btn btn-primary btn-lg btn-block" type="submit">Simpan Absensi</button>
+			</div>
+		</form>
+		<footer class="my-5 pt-5 text-muted text-center text-small">
+			<p class="mb-1">&copy; 2021
+				<?!=dt.perusahaan?>
+			</p>
+		</footer>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script>
+		function submitAbsensi() {
+			$('.alert-warning').show();
+			if (navigator.geolocation)
+				navigator.geolocation.getCurrentPosition(simpanDataAbsensi);
+		}
+		function simpanDataAbsensi(position) {
+			$('.alert').hide();
+
+			let data = {
+				idPegawai: $('#idPegawai').val(),
+				password: $('#password').val(),
+				kegiatan: $('#kegiatan').val(),
+				absensi: $('input[name=absensi]:checked', 'form').val(),
+				workFrom: $('input[name=workFrom]:checked', 'form').val(),
+				position: [
+					position.coords.latitude,
+					position.coords.longitude
+				]
+			};
+			// console.log(data);
+			if (data.absensi == 'Pulang' && data.kegiatan.length < 1) {
+				Swal.fire({
+					title: 'Error!',
+					text: 'Anda belum mengisi kegiatan harian.',
+					icon: 'error',
+					confirmButtonText: 'OK'
+				})
+			}
+			else {
+				$('.btn').attr('disabled', true).html('Menyimpan...');
+				google.script.run.withSuccessHandler(callbackAbsensi).submitAbsensi(data);
+			}
+		}
+		function callbackAbsensi(dt) {
+			if (dt.success) {
+				// $('.alert-success').html('<h5>Hallo '+dt.msg+'!</h5><p>Data absensi anda telah disimpan</p>').show();
+				Swal.fire({
+					title: 'Sukses!',
+					html: '<b>Hai, ' + dt.msg + '!</b><br>Data absensimu sudah disimpan.',
+					icon: 'success',
+					confirmButtonText: 'OK'
+				})
+				$('.form-control').val('');
+			}
+			else {
+				$('#password').val('');
+				Swal.fire({
+					title: 'Gagal!',
+					html: dt.msg,
+					icon: 'error',
+					confirmButtonText: 'OK'
+				})
+			}
+			$('.btn').removeAttr('disabled').html('Simpan Absensi');
+		}
+	</script>
+</body>
+</html>
