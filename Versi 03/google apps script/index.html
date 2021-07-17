@@ -1,0 +1,174 @@
+<!--
+ * ABSENSI - GOOGLE SCRIPT
+ * ***********************************************************************************
+ * Code by    : fahroni|ganteng
+ * Contact me : fahroniganteng@gmail.com
+ * YouTube    : https://www.youtube.com/channel/UCC5ulau9sAq7zcJ9rsAXWYQ
+ * Github     : https://github.com/fahroniganteng
+ * Date       : Jul 2021
+ * License    : MIT
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+	<base target="_top">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</head>
+
+<body class="bg-light">
+	<div class="container">
+		<div class="py-5 text-center">
+			<img class="d-block mx-auto mb-4" src="data:image/png;base64, <?!=dt.logo?>" alt="" width="200">
+			<h2>
+				<?!=dt.perusahaan?>
+			</h2>
+
+
+      <!-- SILAKAN HAPUS BAGIAN INI UNTUK MENGHILANGKAN INFO APLIKASI ------------------------------------------------>
+      <p>
+        <b>Demo Aplikasi Web Absensi v.03</b><br>
+        <a href="https://www.youtube.com/channel/UCC5ulau9sAq7zcJ9rsAXWYQ" target="_blank" class="mr-2">
+          <i class="fab fa-youtube mr-2 text-danger"></i>YouTube Channel
+        </a> | 
+        <a href="https://github.com/fahroniganteng" target="_blank" class="ml-2">
+          <i class="fab fa-github mr-2 text-muted"></i>Fork me at Github
+        </a>
+      </p>
+      <!-- AKHIR HAPUS INFO ------------------------------------------------------------------------------------------->
+		
+    
+    </div>
+		<form class="row" onsubmit="submitAbsensi();return false;">
+			<div class="col-md-12">
+				<h4 class="mb-3">Formulir Absensi</h4>
+				<div class="mb-3">
+					<label for="idPegawai">ID Pegawai</label>
+					<input type="text" class="form-control" id="idPegawai" placeholder="Masukkan ID Anda" required>
+				</div>
+				<div class="mb-3">
+					<label for="password">Password</label>
+					<input type="password" class="form-control" id="password" placeholder="Masukkan password anda" required>
+				</div>
+				<div class="mb-3">
+					<label>Absensi</label>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="absensi" id="absensi1" value="Masuk" required>
+						<label class="form-check-label" for="absensi1">Masuk</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="absensi" id="absensi2" value="Pulang">
+						<label class="form-check-label" for="absensi2">Pulang</label>
+					</div>
+				</div>
+				<div class="mb-3">
+					<label>Lokasi & Status Absensi</label>
+          <!--
+            Jika menambah list Lokasi & status absensi, sesuaikan juga pada kode.gs fungsi validDistance()
+          -->
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="workFrom" id="workFrom2" value="WFO" required>
+						<label class="form-check-label" for="workFrom2">Kantor - WFO sesuai jadwal</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="workFrom" id="workFrom3" value="On Call">
+						<label class="form-check-label" for="workFrom3">Kantor - On call</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="workFrom" id="workFrom4" value="Piket">
+						<label class="form-check-label" for="workFrom4">Kantor - Piket</label>
+					</div>
+          <div class="form-check">
+						<input class="form-check-input" type="radio" name="workFrom" id="workFrom1" value="WFH">
+						<label class="form-check-label" for="workFrom1">Rumah - WFH sesuai jadwal</label>
+					</div>
+          <div class="form-check">
+						<input class="form-check-input" type="radio" name="workFrom" id="workFrom5" value="Ijin">
+						<label class="form-check-label" for="workFrom5">Rumah - Ijin</label>
+					</div>
+				</div>
+				<div class="mb-3">
+					<label for="kegiatan">Kegiatan Harian</label>
+					<textarea class="form-control" id="kegiatan" placeholder="Diisi hanya saat pulang" rows="4"></textarea>
+				</div>
+				<hr class="mb-4">
+				<div class="alert alert-success" role="alert" style="display:none"></div>
+				<div class="alert alert-warning" role="alert" style="display:none">
+					<h5>Perhatian!</h5>
+					<p>Anda harus mengijinkan akses lokasi pada browser agar bisa melakukan absensi</p>
+				</div>
+				<button class="btn btn-primary btn-lg btn-block" type="submit"><i class="fas fa-fingerprint mr-2"></i> Simpan Absensi</button>
+			</div>
+		</form>
+		<footer class="my-5 pt-5 text-muted text-center text-small">
+			<p class="mb-1">
+        Copyright &copy; 2021 <?!=dt.perusahaan?>. All rights reserved
+			</p>
+		</footer>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.all.min.js"></script>
+	<script>
+		function submitAbsensi() {
+			if (navigator.geolocation){
+        $('.alert-warning').show();
+        navigator.geolocation.getCurrentPosition(simpanDataAbsensi, errorGetLocation);
+      }
+		}
+    function errorGetLocation(){
+      $('.alert-warning').show();
+    }
+		function simpanDataAbsensi(position) {
+      $('.alert-warning').hide();
+			let data = {
+				idPegawai: $('#idPegawai').val(),
+				password: $('#password').val(),
+				kegiatan: $('#kegiatan').val(),
+				absensi: $('input[name=absensi]:checked', 'form').val(),
+				workFrom: $('input[name=workFrom]:checked', 'form').val(),
+				position: [
+					position.coords.latitude,
+					position.coords.longitude
+				]
+			};
+			// console.log(data);
+			if (data.absensi == 'Pulang' && data.kegiatan.length < 1) {
+				Swal.fire({
+					title: 'Error!',
+					text: 'Anda belum mengisi kegiatan harian.',
+					icon: 'error',
+					confirmButtonText: 'OK'
+				})
+			}
+			else {
+				$('.btn').attr('disabled', true).html('<i class="fas fa-spinner fa-pulse mr-2"></i> Menyimpan...');
+				google.script.run.withSuccessHandler(callbackAbsensi).submitAbsensi(data);
+			}
+		}
+		function callbackAbsensi(dt) {
+			if (dt.success) {
+				Swal.fire({
+					title: 'Sukses!',
+					html: '<b>Hai, ' + dt.msg + '!</b><br>Data absensimu sudah disimpan.',
+					icon: 'success',
+					confirmButtonText: 'OK'
+				})
+				$('.form-control').val('');
+			}
+			else {
+				$('#password').val('');
+				Swal.fire({
+					title: 'Gagal!',
+					html: dt.msg,
+					icon: 'error',
+					confirmButtonText: 'OK'
+				})
+			}
+			$('.btn').removeAttr('disabled').html('<i class="fas fa-fingerprint mr-2"></i> Simpan Absensi');
+		}
+	</script>
+</body>
+</html>
