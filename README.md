@@ -54,7 +54,7 @@ Ditemukan bug pada penggunaan ID Pegawai dengan nol di depan,
 `misal : 0054321`  
 pada saat submit absensi, ID tersebut di convert menjadi angka oleh spreadsheet, sehingga yang terekam pada data absensi adalah :  
 `54321`  
-pada aplikasi 0054321 != 54321, sehingga dianggap user yang berbeda dan masih bisa melakukan absensi di hari yang sama.  
+pada aplikasi `0054321 != 54321`, sehingga dianggap user yang berbeda dan masih bisa melakukan absensi di hari yang sama.  
 <b>Solusi Sementara </b>  
 Tambahkan huruf pada ID, misal:  
 `ABC0054321`
