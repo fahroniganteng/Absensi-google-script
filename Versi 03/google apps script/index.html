@@ -112,7 +112,15 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.all.min.js"></script>
 	<script>
+		function loading(){
+      $('.btn').attr('disabled', true).html('<i class="fas fa-spinner fa-pulse mr-2"></i> Menyimpan...');
+    }
+    function unloading(){
+      $('.btn').removeAttr('disabled').html('<i class="fas fa-fingerprint mr-2"></i> Simpan Absensi');
+    }
+
 		function submitAbsensi() {
+      loading();
 			if (navigator.geolocation){
         $('.alert-warning').show();
         navigator.geolocation.getCurrentPosition(simpanDataAbsensi, errorGetLocation);
@@ -120,6 +128,13 @@
 		}
     function errorGetLocation(){
       $('.alert-warning').show();
+      Swal.fire({
+        title: 'Absensi gagal!',
+        text: 'Anda tidak mengizinkan akses lokasi.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
+      unloading();
     }
 		function simpanDataAbsensi(position) {
       $('.alert-warning').hide();
@@ -142,11 +157,10 @@
 					icon: 'error',
 					confirmButtonText: 'OK'
 				})
+        unloading();
 			}
-			else {
-				$('.btn').attr('disabled', true).html('<i class="fas fa-spinner fa-pulse mr-2"></i> Menyimpan...');
+			else 
 				google.script.run.withSuccessHandler(callbackAbsensi).submitAbsensi(data);
-			}
 		}
 		function callbackAbsensi(dt) {
 			if (dt.success) {
@@ -167,7 +181,7 @@
 					confirmButtonText: 'OK'
 				})
 			}
-			$('.btn').removeAttr('disabled').html('<i class="fas fa-fingerprint mr-2"></i> Simpan Absensi');
+			unloading();
 		}
 	</script>
 </body>
