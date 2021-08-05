@@ -3,7 +3,7 @@
  * ***********************************************************************************
  * Code by    : fahroni|ganteng
  * Contact me : fahroniganteng@gmail.com
- * YouTube    : https://www.youtube.com/channel/UCC5ulau9sAq7zcJ9rsAXWYQ
+ * YouTube    : https://www.youtube.com/c/FahroniGanteng
  * Github     : https://github.com/fahroniganteng
  * Date       : Jul 2021
  * License    : MIT
