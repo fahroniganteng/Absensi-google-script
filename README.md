@@ -119,3 +119,11 @@ Lisensi kode saya adalah MIT, untuk libraries yang lain mengikuti lisensi masing
 - Google script
 - Google spreadsheet
 - etc...
+
+<hr>
+
+## Donasi  
+Dukung saya 
+- [Traktir kopi](https://sociabuzz.com/fahroniganteng/tribe)
+- [atau Es krim](https://trakteer.id/fahroniganteng/tip) 
+
