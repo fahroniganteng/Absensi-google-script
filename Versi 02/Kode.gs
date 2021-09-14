@@ -8,9 +8,9 @@
  * 
  */
 
-var idGambarLogo = '[1pL2RQ_pjjXtuyR8gx2BedrFgG8ef6aFe]'; // id file logo di google drive
-var idDataPegawai = '1H-dOK-5HnoKKbvhvWE300ZmYHK8RYT-dQ4GeprTMzTA'; // id file spreadsheet
-var idDataAbsensi = '1b4aktN_AiBIvLMItKuTcynhcTdF_Ik-onTPvD7dhB7Q'; // id file spreadsheet
+var idGambarLogo = '-------------------id file-------------------'; // id file logo di google drive
+var idDataPegawai = '------------------id file-------------------'; // id file spreadsheet
+var idDataAbsensi = '------------------id file-------------------'; // id file spreadsheet
 var namaPerusahaan = 'Fahroni Ganteng co, ltd';
 var lokasiPerusahaan = [-6.088664, 106.996309]; // koordinat [lat,lon]
 var jarakMaxWFO = 1; // max jarak (dari koordinat perusahaan) yang diperbolehkan absensi WFO (dalam km)
